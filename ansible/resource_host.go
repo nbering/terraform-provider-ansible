@@ -14,6 +14,11 @@ func resourceHost() *schema.Resource {
 				Required: true,
 				ForceNew: true,
 			},
+			"vars": &schema.Schema{
+				Type:     schema.TypeMap,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }

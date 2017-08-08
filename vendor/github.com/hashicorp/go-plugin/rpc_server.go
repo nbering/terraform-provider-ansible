@@ -34,14 +34,10 @@ type RPCServer struct {
 	lock sync.Mutex
 }
 
-// ServerProtocol impl.
-func (s *RPCServer) Init() error { return nil }
-
-// ServerProtocol impl.
-func (s *RPCServer) Config() string { return "" }
-
-// ServerProtocol impl.
-func (s *RPCServer) Serve(lis net.Listener) {
+// Accept accepts connections on a listener and serves requests for
+// each incoming connection. Accept blocks; the caller typically invokes
+// it in a go statement.
+func (s *RPCServer) Accept(lis net.Listener) {
 	for {
 		conn, err := lis.Accept()
 		if err != nil {
@@ -124,14 +120,6 @@ func (s *RPCServer) done() {
 // dispenseServer dispenses variousinterface implementations for Terraform.
 type controlServer struct {
 	server *RPCServer
-}
-
-// Ping can be called to verify the connection (and likely the binary)
-// is still alive to a plugin.
-func (c *controlServer) Ping(
-	null bool, response *struct{}) error {
-	*response = struct{}{}
-	return nil
 }
 
 func (c *controlServer) Quit(

@@ -2,11 +2,8 @@ package plugin
 
 import (
 	"bufio"
-	"crypto/subtle"
-	"crypto/tls"
 	"errors"
 	"fmt"
-	"hash"
 	"io"
 	"io/ioutil"
 	"log"
@@ -20,10 +17,6 @@ import (
 	"sync/atomic"
 	"time"
 	"unicode"
-
-	"encoding/json"
-
-	hclog "github.com/hashicorp/go-hclog"
 )
 
 // If this is 1, then we've called CleanupClients. This can be used
@@ -42,22 +35,6 @@ var (
 	// ErrProcessNotFound is returned when a client is instantiated to
 	// reattach to an existing process and it isn't found.
 	ErrProcessNotFound = errors.New("Reattachment process not found")
-
-	// ErrChecksumsDoNotMatch is returned when binary's checksum doesn't match
-	// the one provided in the SecureConfig.
-	ErrChecksumsDoNotMatch = errors.New("checksums did not match")
-
-	// ErrSecureNoChecksum is returned when an empty checksum is provided to the
-	// SecureConfig.
-	ErrSecureConfigNoChecksum = errors.New("no checksum provided")
-
-	// ErrSecureNoHash is returned when a nil Hash object is provided to the
-	// SecureConfig.
-	ErrSecureConfigNoHash = errors.New("no hash implementation provided")
-
-	// ErrSecureConfigAndReattach is returned when both Reattach and
-	// SecureConfig are set.
-	ErrSecureConfigAndReattach = errors.New("only one of Reattach or SecureConfig can be set")
 )
 
 // Client handles the lifecycle of a plugin application. It launches
@@ -78,9 +55,7 @@ type Client struct {
 	l           sync.Mutex
 	address     net.Addr
 	process     *os.Process
-	client      ClientProtocol
-	protocol    Protocol
-	logger      hclog.Logger
+	client      *RPCClient
 }
 
 // ClientConfig is the configuration used to initialize a new
@@ -103,13 +78,6 @@ type ClientConfig struct {
 	// that is already running. This isn't common.
 	Cmd      *exec.Cmd
 	Reattach *ReattachConfig
-
-	// SecureConfig is configuration for verifying the integrity of the
-	// executable. It can not be used with Reattach.
-	SecureConfig *SecureConfig
-
-	// TLSConfig is used to enable TLS on the RPC client.
-	TLSConfig *tls.Config
 
 	// Managed represents if the client should be managed by the
 	// plugin package or not. If true, then by calling CleanupClients,
@@ -141,74 +109,14 @@ type ClientConfig struct {
 	// sync any of these streams.
 	SyncStdout io.Writer
 	SyncStderr io.Writer
-
-	// AllowedProtocols is a list of allowed protocols. If this isn't set,
-	// then only netrpc is allowed. This is so that older go-plugin systems
-	// can show friendly errors if they see a plugin with an unknown
-	// protocol.
-	//
-	// By setting this, you can cause an error immediately on plugin start
-	// if an unsupported protocol is used with a good error message.
-	//
-	// If this isn't set at all (nil value), then only net/rpc is accepted.
-	// This is done for legacy reasons. You must explicitly opt-in to
-	// new protocols.
-	AllowedProtocols []Protocol
-
-	// Logger is the logger that the client will used. If none is provided,
-	// it will default to hclog's default logger.
-	Logger hclog.Logger
 }
 
 // ReattachConfig is used to configure a client to reattach to an
 // already-running plugin process. You can retrieve this information by
 // calling ReattachConfig on Client.
 type ReattachConfig struct {
-	Protocol Protocol
-	Addr     net.Addr
-	Pid      int
-}
-
-// SecureConfig is used to configure a client to verify the integrity of an
-// executable before running. It does this by verifying the checksum is
-// expected. Hash is used to specify the hashing method to use when checksumming
-// the file.  The configuration is verified by the client by calling the
-// SecureConfig.Check() function.
-//
-// The host process should ensure the checksum was provided by a trusted and
-// authoritative source. The binary should be installed in such a way that it
-// can not be modified by an unauthorized user between the time of this check
-// and the time of execution.
-type SecureConfig struct {
-	Checksum []byte
-	Hash     hash.Hash
-}
-
-// Check takes the filepath to an executable and returns true if the checksum of
-// the file matches the checksum provided in the SecureConfig.
-func (s *SecureConfig) Check(filePath string) (bool, error) {
-	if len(s.Checksum) == 0 {
-		return false, ErrSecureConfigNoChecksum
-	}
-
-	if s.Hash == nil {
-		return false, ErrSecureConfigNoHash
-	}
-
-	file, err := os.Open(filePath)
-	if err != nil {
-		return false, err
-	}
-	defer file.Close()
-
-	_, err = io.Copy(s.Hash, file)
-	if err != nil {
-		return false, err
-	}
-
-	sum := s.Hash.Sum(nil)
-
-	return subtle.ConstantTimeCompare(sum, s.Checksum) == 1, nil
+	Addr net.Addr
+	Pid  int
 }
 
 // This makes sure all the managed subprocesses are killed and properly
@@ -266,19 +174,7 @@ func NewClient(config *ClientConfig) (c *Client) {
 		config.SyncStderr = ioutil.Discard
 	}
 
-	if config.AllowedProtocols == nil {
-		config.AllowedProtocols = []Protocol{ProtocolNetRPC}
-	}
-
-	if config.Logger == nil {
-		config.Logger = hclog.Default()
-		config.Logger = config.Logger.ResetNamed("plugin")
-	}
-
-	c = &Client{
-		config: config,
-		logger: config.Logger,
-	}
+	c = &Client{config: config}
 	if config.Managed {
 		managedClientsLock.Lock()
 		managedClients = append(managedClients, c)
@@ -288,11 +184,11 @@ func NewClient(config *ClientConfig) (c *Client) {
 	return
 }
 
-// Client returns the protocol client for this connection.
+// Client returns an RPC client for the plugin.
 //
-// Subsequent calls to this will return the same client.
-func (c *Client) Client() (ClientProtocol, error) {
-	_, err := c.Start()
+// Subsequent calls to this will return the same RPC client.
+func (c *Client) Client() (*RPCClient, error) {
+	addr, err := c.Start()
 	if err != nil {
 		return nil, err
 	}
@@ -304,18 +200,29 @@ func (c *Client) Client() (ClientProtocol, error) {
 		return c.client, nil
 	}
 
-	switch c.protocol {
-	case ProtocolNetRPC:
-		c.client, err = newRPCClient(c)
-
-	case ProtocolGRPC:
-		c.client, err = newGRPCClient(c)
-
-	default:
-		return nil, fmt.Errorf("unknown server protocol: %s", c.protocol)
+	// Connect to the client
+	conn, err := net.Dial(addr.Network(), addr.String())
+	if err != nil {
+		return nil, err
+	}
+	if tcpConn, ok := conn.(*net.TCPConn); ok {
+		// Make sure to set keep alive so that the connection doesn't die
+		tcpConn.SetKeepAlive(true)
 	}
 
+	// Create the actual RPC client
+	c.client, err = NewRPCClient(conn, c.config.Plugins)
 	if err != nil {
+		conn.Close()
+		return nil, err
+	}
+
+	// Begin the stream syncing so that stdin, out, err work properly
+	err = c.client.SyncStreams(
+		c.config.SyncStdout,
+		c.config.SyncStderr)
+	if err != nil {
+		c.client.Close()
 		c.client = nil
 		return nil, err
 	}
@@ -367,7 +274,8 @@ func (c *Client) Kill() {
 			if err != nil {
 				// If there was an error just log it. We're going to force
 				// kill in a moment anyways.
-				c.logger.Warn("error closing client during Kill", "err", err)
+				log.Printf(
+					"[WARN] plugin: error closing client during Kill: %s", err)
 			}
 		}
 	}
@@ -410,13 +318,8 @@ func (c *Client) Start() (addr net.Addr, err error) {
 	{
 		cmdSet := c.config.Cmd != nil
 		attachSet := c.config.Reattach != nil
-		secureSet := c.config.SecureConfig != nil
 		if cmdSet == attachSet {
 			return nil, fmt.Errorf("Only one of Cmd or Reattach must be set")
-		}
-
-		if secureSet && attachSet {
-			return nil, ErrSecureConfigAndReattach
 		}
 	}
 
@@ -447,7 +350,7 @@ func (c *Client) Start() (addr net.Addr, err error) {
 			pidWait(pid)
 
 			// Log so we can see it
-			c.logger.Debug("reattached plugin process exited")
+			log.Printf("[DEBUG] plugin: reattached plugin process exited\n")
 
 			// Mark it
 			c.l.Lock()
@@ -461,11 +364,6 @@ func (c *Client) Start() (addr net.Addr, err error) {
 		// Set the address and process
 		c.address = c.config.Reattach.Addr
 		c.process = p
-		c.protocol = c.config.Reattach.Protocol
-		if c.protocol == "" {
-			// Default the protocol to net/rpc for backwards compatibility
-			c.protocol = ProtocolNetRPC
-		}
 
 		return c.address, nil
 	}
@@ -486,15 +384,7 @@ func (c *Client) Start() (addr net.Addr, err error) {
 	cmd.Stderr = stderr_w
 	cmd.Stdout = stdout_w
 
-	if c.config.SecureConfig != nil {
-		if ok, err := c.config.SecureConfig.Check(cmd.Path); err != nil {
-			return nil, fmt.Errorf("error verifying checksum: %s", err)
-		} else if !ok {
-			return nil, ErrChecksumsDoNotMatch
-		}
-	}
-
-	c.logger.Debug("starting plugin", "path", cmd.Path, "args", cmd.Args)
+	log.Printf("[DEBUG] plugin: starting plugin: %s %#v", cmd.Path, cmd.Args)
 	err = cmd.Start()
 	if err != nil {
 		return
@@ -528,7 +418,7 @@ func (c *Client) Start() (addr net.Addr, err error) {
 		cmd.Wait()
 
 		// Log and make sure to flush the logs write away
-		c.logger.Debug("plugin process exited", "path", cmd.Path)
+		log.Printf("[DEBUG] plugin: %s: plugin process exited\n", cmd.Path)
 		os.Stderr.Sync()
 
 		// Mark that we exited
@@ -575,7 +465,7 @@ func (c *Client) Start() (addr net.Addr, err error) {
 	timeout := time.After(c.config.StartTimeout)
 
 	// Start looking for the address
-	c.logger.Debug("waiting for RPC address", "path", cmd.Path)
+	log.Printf("[DEBUG] plugin: waiting for RPC address for: %s", cmd.Path)
 	select {
 	case <-timeout:
 		err = errors.New("timeout while waiting for plugin to start")
@@ -585,7 +475,7 @@ func (c *Client) Start() (addr net.Addr, err error) {
 		// Trim the line and split by "|" in order to get the parts of
 		// the output.
 		line := strings.TrimSpace(string(lineBytes))
-		parts := strings.SplitN(line, "|", 6)
+		parts := strings.SplitN(line, "|", 4)
 		if len(parts) < 4 {
 			err = fmt.Errorf(
 				"Unrecognized remote plugin message: %s\n\n"+
@@ -635,27 +525,6 @@ func (c *Client) Start() (addr net.Addr, err error) {
 		default:
 			err = fmt.Errorf("Unknown address type: %s", parts[3])
 		}
-
-		// If we have a server type, then record that. We default to net/rpc
-		// for backwards compatibility.
-		c.protocol = ProtocolNetRPC
-		if len(parts) >= 5 {
-			c.protocol = Protocol(parts[4])
-		}
-
-		found := false
-		for _, p := range c.config.AllowedProtocols {
-			if p == c.protocol {
-				found = true
-				break
-			}
-		}
-		if !found {
-			err = fmt.Errorf("Unsupported plugin protocol %q. Supported: %v",
-				c.protocol, c.config.AllowedProtocols)
-			return
-		}
-
 	}
 
 	c.address = addr
@@ -686,46 +555,9 @@ func (c *Client) ReattachConfig() *ReattachConfig {
 	}
 
 	return &ReattachConfig{
-		Protocol: c.protocol,
-		Addr:     c.address,
-		Pid:      c.config.Cmd.Process.Pid,
+		Addr: c.address,
+		Pid:  c.config.Cmd.Process.Pid,
 	}
-}
-
-// Protocol returns the protocol of server on the remote end. This will
-// start the plugin process if it isn't already started. Errors from
-// starting the plugin are surpressed and ProtocolInvalid is returned. It
-// is recommended you call Start explicitly before calling Protocol to ensure
-// no errors occur.
-func (c *Client) Protocol() Protocol {
-	_, err := c.Start()
-	if err != nil {
-		return ProtocolInvalid
-	}
-
-	return c.protocol
-}
-
-// dialer is compatible with grpc.WithDialer and creates the connection
-// to the plugin.
-func (c *Client) dialer(_ string, timeout time.Duration) (net.Conn, error) {
-	// Connect to the client
-	conn, err := net.Dial(c.address.Network(), c.address.String())
-	if err != nil {
-		return nil, err
-	}
-	if tcpConn, ok := conn.(*net.TCPConn); ok {
-		// Make sure to set keep alive so that the connection doesn't die
-		tcpConn.SetKeepAlive(true)
-	}
-
-	// If we have a TLS config we wrap our connection. We only do this
-	// for net/rpc since gRPC uses its own mechanism for TLS.
-	if c.protocol == ProtocolNetRPC && c.config.TLSConfig != nil {
-		conn = tls.Client(conn, c.config.TLSConfig)
-	}
-
-	return conn, nil
 }
 
 func (c *Client) logStderr(r io.Reader) {
@@ -734,35 +566,9 @@ func (c *Client) logStderr(r io.Reader) {
 		line, err := bufR.ReadString('\n')
 		if line != "" {
 			c.config.Stderr.Write([]byte(line))
+
 			line = strings.TrimRightFunc(line, unicode.IsSpace)
-
-			l := c.logger.Named(filepath.Base(c.config.Cmd.Path))
-			// If output is not JSON format, print directly as error
-			if !isJSON(line) {
-				l.Debug("log from plugin", "entry", line)
-			} else {
-				// Parse JSON line received from the plugin into logEntry, and print via
-				// the client's logger
-				entry, err := parseJSON(line)
-				if err != nil {
-					l.Error("error parsing json from plugin", "error", err)
-				}
-				out := flattenKVPairs(entry.KVPairs)
-
-				l = l.With("timestamp", entry.Timestamp.Format(hclog.TimeFormat))
-				switch hclog.LevelFromString(entry.Level) {
-				case hclog.Trace:
-					l.Trace(entry.Message, out...)
-				case hclog.Debug:
-					l.Debug(entry.Message, out...)
-				case hclog.Info:
-					l.Info(entry.Message, out...)
-				case hclog.Warn:
-					l.Warn(entry.Message, out...)
-				case hclog.Error:
-					l.Error(entry.Message, out...)
-				}
-			}
+			log.Printf("[DEBUG] plugin: %s: %s", filepath.Base(c.config.Cmd.Path), line)
 		}
 
 		if err == io.EOF {
@@ -772,9 +578,4 @@ func (c *Client) logStderr(r io.Reader) {
 
 	// Flag that we've completed logging for others
 	close(c.doneLogging)
-}
-
-func isJSON(str string) bool {
-	var js json.RawMessage
-	return json.Unmarshal([]byte(str), &js) == nil
 }

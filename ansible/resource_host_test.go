@@ -14,12 +14,12 @@ func TestAnsibleResource(t *testing.T) {
 		Steps: []r.TestStep{
 			r.TestStep{
 				Config: `
-			resource "ansible_host" "example" {
+			resource "ansible_host" "test" {
 				inventory_hostname = "example.medstack.net"
 			}
 
 			output "host_id" {
-				value = "${ansible_host.id}"
+				value = "${ansible_host.test.id}"
 			}
 		`,
 				Check: func(s *terraform.State) error {

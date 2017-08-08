@@ -421,20 +421,10 @@
 			"versionExact": "v0.10.0"
 		},
 		{
-			"path": "github.com/hashicorp/terraform/helper/schemav0.10.0",
-			"revision": ""
-		},
-		{
 			"checksumSHA1": "1yCGh/Wl4H4ODBBRmIRFcV025b0=",
 			"path": "github.com/hashicorp/terraform/helper/shadow",
 			"revision": "77f74c37c890067072fe19ef252d0989527c7f65",
 			"revisionTime": "2017-08-07T16:50:33Z"
-		},
-		{
-			"path": "github.com/hashicorp/terraform/heplper/schema",
-			"revision": "v0.10.0",
-			"version": "v0.10.0",
-			"versionExact": "v0.10.0"
 		},
 		{
 			"checksumSHA1": "yFWmdS6yEJZpRJzUqd/mULqCYGk=",

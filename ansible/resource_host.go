@@ -1,6 +1,8 @@
 package ansible
 
-import "github.com/hashicorp/terraform/helper/schema"
+import (
+	"github.com/hashicorp/terraform/helper/schema"
+)
 
 func resourceHost() *schema.Resource {
 	return &schema.Resource{
@@ -12,6 +14,14 @@ func resourceHost() *schema.Resource {
 			"inventory_hostname": {
 				Type:     schema.TypeString,
 				Required: true,
+				ForceNew: true,
+			},
+			"groups": {
+				Type: schema.TypeList,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+				Optional: true,
 				ForceNew: true,
 			},
 			"vars": &schema.Schema{

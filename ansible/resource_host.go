@@ -28,6 +28,7 @@ func resourceHost() *schema.Resource {
 				Type:     schema.TypeMap,
 				Optional: true,
 				Computed: true,
+				ForceNew: true,
 			},
 		},
 	}

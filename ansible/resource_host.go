@@ -7,8 +7,8 @@ import (
 func resourceHost() *schema.Resource {
 	return &schema.Resource{
 		Create: resourceHostCreate,
-		Read:   resourceHostRead,
-		Delete: resourceHostDelete,
+		Read:   schema.Noop,
+		Delete: schema.RemoveFromState,
 
 		Schema: map[string]*schema.Schema{
 			"inventory_hostname": {
@@ -36,13 +36,5 @@ func resourceHost() *schema.Resource {
 func resourceHostCreate(d *schema.ResourceData, meta interface{}) error {
 	d.SetId(d.Get("inventory_hostname").(string))
 
-	return nil
-}
-
-func resourceHostRead(d *schema.ResourceData, meta interface{}) error {
-	return nil
-}
-
-func resourceHostDelete(d *schema.ResourceData, meta interface{}) error {
 	return nil
 }

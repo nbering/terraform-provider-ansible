@@ -8,6 +8,7 @@ func resourceHost() *schema.Resource {
 	return &schema.Resource{
 		Create: resourceHostCreate,
 		Read:   schema.Noop,
+		Update: schema.Noop,
 		Delete: schema.RemoveFromState,
 
 		Schema: map[string]*schema.Schema{
@@ -22,13 +23,10 @@ func resourceHost() *schema.Resource {
 					Type: schema.TypeString,
 				},
 				Optional: true,
-				ForceNew: true,
 			},
 			"vars": &schema.Schema{
 				Type:     schema.TypeMap,
 				Optional: true,
-				Computed: true,
-				ForceNew: true,
 			},
 		},
 	}

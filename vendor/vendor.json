@@ -195,6 +195,12 @@
 			"revisionTime": "2017-07-27T06:48:18Z"
 		},
 		{
+			"checksumSHA1": "mrz/kicZiUaHxkyfvC/DyQcr8Do=",
+			"path": "github.com/davecgh/go-spew/spew",
+			"revision": "ecdeabc65495df2dec95d7c4a4c3e021903035e5",
+			"revisionTime": "2017-10-02T20:02:53Z"
+		},
+		{
 			"checksumSHA1": "jK0knSGdB7hA/Pvc0mQBYkYxN/8=",
 			"path": "github.com/go-ini/ini",
 			"revision": "32e4c1e6bc4e7d0d8451aa6b75200d19e37a536a",
@@ -399,6 +405,12 @@
 			"revisionTime": "2017-02-13T18:49:38Z"
 		},
 		{
+			"checksumSHA1": "vt+P9D2yWDO3gdvdgCzwqunlhxU=",
+			"path": "github.com/hashicorp/logutils",
+			"revision": "0dc08b1671f34c4250ce212759ebd880f743d883",
+			"revisionTime": "2015-06-09T07:04:31Z"
+		},
+		{
 			"checksumSHA1": "qmw9gkFiMmAJZxFGJIqIml0WOjU=",
 			"path": "github.com/hashicorp/terraform/config",
 			"revision": "27aa4cb6bf99b4edcbf473e720c322cf6cffe490",
@@ -435,6 +447,12 @@
 			"revisionTime": "2017-11-19T02:44:57Z"
 		},
 		{
+			"checksumSHA1": "uT6Q9RdSRAkDjyUgQlJ2XKJRab4=",
+			"path": "github.com/hashicorp/terraform/helper/config",
+			"revision": "27aa4cb6bf99b4edcbf473e720c322cf6cffe490",
+			"revisionTime": "2017-11-19T02:44:57Z"
+		},
+		{
 			"checksumSHA1": "KNvbU1r5jv0CBeQLnEtDoL3dRtc=",
 			"path": "github.com/hashicorp/terraform/helper/hashcode",
 			"revision": "27aa4cb6bf99b4edcbf473e720c322cf6cffe490",
@@ -445,6 +463,20 @@
 			"path": "github.com/hashicorp/terraform/helper/hilmapstructure",
 			"revision": "27aa4cb6bf99b4edcbf473e720c322cf6cffe490",
 			"revisionTime": "2017-11-19T02:44:57Z"
+		},
+		{
+			"checksumSHA1": "BAXV9ruAyno3aFgwYI2/wWzB2Gc=",
+			"path": "github.com/hashicorp/terraform/helper/logging",
+			"revision": "27aa4cb6bf99b4edcbf473e720c322cf6cffe490",
+			"revisionTime": "2017-11-19T02:44:57Z"
+		},
+		{
+			"checksumSHA1": "aHK2kxJBvfgc6usUqpopPkzhjao=",
+			"path": "github.com/hashicorp/terraform/helper/resource",
+			"revision": "ec9d4f1d0f90e8ec5148f94b6d634eb542a4f0ce",
+			"revisionTime": "2017-11-16T19:22:42Z",
+			"version": "v0.11.0",
+			"versionExact": "v0.11.0"
 		},
 		{
 			"checksumSHA1": "BJWJYvxMNnEzaGnByY9mx0xF0jc=",

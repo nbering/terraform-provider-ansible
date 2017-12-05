@@ -1,8 +1,8 @@
-# terraform-provider-ansible
+# Ansible Terraform Provider
 A Terraform provider serving as an interop layer for an Ansible [dynamic
 inventory script][1].
 
-## Terraform Config
+## Terraform Configuration Example
 
 ```
 resource "ansible_host" "example" {

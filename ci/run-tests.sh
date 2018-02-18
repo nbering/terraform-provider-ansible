@@ -10,4 +10,5 @@ pushd /go/src/github.com/nbering/terraform-provider-ansible
     make test
     make testacc
     make vet
+    ./scripts/build-release.sh
 popd

@@ -2,7 +2,7 @@
 # Build definition for Concourse.ci
 platform: linux
 image_resource:
-  type: docker_image
+  type: docker-image
   source:
     repository: golang
 

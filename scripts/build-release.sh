@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -e -x
 # Cross-compile for all platforms with gox
 
 rm -r pkg/*

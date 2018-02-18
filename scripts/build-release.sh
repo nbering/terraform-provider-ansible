@@ -2,6 +2,12 @@
 set -e -x
 # Cross-compile for all platforms with gox
 
+# Check if gox is installed. If not, get it.
+which gox
+if [[ $? -ne 0 ]]; then
+    go get github.com/mitchellh/gox
+fi
+
 # Clean old builds if present.
 if [ -d pkg ]; then
     rm -r pkg/*

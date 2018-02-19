@@ -9,7 +9,7 @@ if [[ $? -ne 0 ]]; then
     go get github.com/mitchellh/gox
 fi
 
-which gox
+which zip
 if [[ $? -ne 0 ]]; then
     which dpkg
     if [[ $? -ne 0 ]]; then
@@ -18,9 +18,9 @@ if [[ $? -ne 0 ]]; then
     else
         set -e
         pushd "$(mktemp -d)"
-        wget https://deb.debian.org/debian/pool/main/z/zip/zip_3.0-11+b1_amd64.deb
-        dpkg -i zip_3.0-11+b1_amd64.deb
-        rm zip_3.0-11+b1_amd64.deb
+            wget https://deb.debian.org/debian/pool/main/z/zip/zip_3.0-11+b1_amd64.deb
+            dpkg -i zip_3.0-11+b1_amd64.deb
+            rm zip_3.0-11+b1_amd64.deb
         popd
     fi
 fi

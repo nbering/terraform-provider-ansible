@@ -38,3 +38,4 @@ gox -output "pkg/{{.OS}}_{{.Arch}}/{{.Dir}}_${RELEASE_VERSION}"
 
 cd pkg;
 find * -type d -exec zip -r "${PROJECT_NAME}-{}.zip" "{}" \;
+find . -type f -name '*.zip' -print

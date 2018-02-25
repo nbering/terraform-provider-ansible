@@ -2,6 +2,8 @@
 
 set -e -x
 
+ls -alR
+
 mkdir -p /go/src/github.com/nbering
 
 ln -s  "$(pwd)/terraform-provider-ansible" "/go/src/github.com/nbering/terraform-provider-ansible"

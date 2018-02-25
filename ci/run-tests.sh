@@ -2,7 +2,7 @@
 
 set -e -x
 
-ls -alR
+cat terraform-provider-ansible/.git/ref
 
 mkdir -p /go/src/github.com/nbering
 

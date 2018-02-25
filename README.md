@@ -28,7 +28,7 @@ A Terraform Provisioner that runs Ansible-Local on a target machine at creation-
 
 ### [adammck/terraform-inventory](https://github.com/adammck/terraform-inventory)
 A very similar solution to this one, without the Logical provider. Depends on
-specific Terraform resoure types, and relies heavily on cloud-providers' tag
+specific Terraform resource types, and relies heavily on cloud-providers' tag
 implementations.
 
 ### [Ansible Module: Terraform](http://docs.ansible.com/ansible/devel/modules/terraform_module.html)

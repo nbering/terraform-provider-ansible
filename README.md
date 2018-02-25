@@ -20,6 +20,15 @@ resource "ansible_host" "example" {
         ansible_user = "admin"
     }
 }
+
+resource "ansible_group" "web" {
+  inventory_group_name = "web"
+  children = ["foo", "bar", "baz"]
+  vars {
+    foo = "bar"
+    bar = 2
+  }
+}
 ```
 
 ## Alternatives and Similar Projects

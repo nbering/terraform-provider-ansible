@@ -1,0 +1,13 @@
+---
+# Build definition for Concourse.ci
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: golang
+
+inputs:
+  - name: terraform-provider-ansible
+
+run:
+  path: ./terraform-provider-ansible/ci/release-build.sh

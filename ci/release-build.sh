@@ -8,6 +8,10 @@ ln -s  "$(pwd)/terraform-provider-ansible" "/go/src/github.com/nbering/terraform
 
 pushd /go/src/github.com/nbering/terraform-provider-ansible
     ./scripts/build-release.sh
-    echo "$(git describe --abbrev=0)" > ./pkg/tag
-    echo "Release $(git describe --abbrev=0)" > ./pkg/release-name
+popd
+
+pushd terraform-provider-ansible
+    echo "$(git describe --abbrev=0)" > ../release-binaries/tag
+    echo "Release $(git describe --abbrev=0)" > ../release-binaries/release-name
+    mv pkg/*.zip ../release-binaries/
 popd

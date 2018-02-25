@@ -9,5 +9,8 @@ image_resource:
 inputs:
   - name: terraform-provider-ansible
 
+outputs:
+  - name: release-binaries
+
 run:
   path: ./terraform-provider-ansible/ci/release-build.sh

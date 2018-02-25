@@ -2,6 +2,9 @@
 A Terraform provider serving as an interop layer for an Ansible [dynamic
 inventory script][1].
 
+Read the [introductory blog post][3] for an explanation of the design
+motivations behind this provider.
+
 ## Installation
 
 To install a third-party plugin on your system, follow the [plugin installation
@@ -19,6 +22,18 @@ resource "ansible_host" "example" {
 }
 ```
 
+## Alternatives and Similar Projects
+### [jonmorehouse/terraform-provisioner-ansible](https://github.com/jonmorehouse/terraform-provisioner-ansible)
+A Terraform Provisioner that runs Ansible-Local on a target machine at creation-time.
+
+### [adammck/terraform-inventory](https://github.com/adammck/terraform-inventory)
+A very similar solution to this one, without the Logical provider. Depends on
+specific Terraform resoure types, and relies heavily on cloud-providers' tag
+implementations.
+
+### [Ansible Module: Terraform](http://docs.ansible.com/ansible/devel/modules/terraform_module.html)
+An Ansible module that runs Terraform plans and deployments.
+
 ## License
 
 Contributions specific to this project are made available under the
@@ -29,3 +44,4 @@ and made available under their own license considerations.
 
 [1]: https://gitlab.com/nbering/terraform-inventory/
 [2]: https://www.terraform.io/docs/plugins/basics.html#installing-a-plugin
+[3]: http://nicholasbering.ca/tools/2018/01/08/introducing-terraform-provider-ansible/

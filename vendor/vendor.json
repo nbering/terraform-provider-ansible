@@ -779,10 +779,10 @@
 			"revisionTime": "2017-11-15T06:26:45Z"
 		},
 		{
-			"checksumSHA1": "2t6c6F2y4b/PEV04TOHpQxh/xLc=",
+			"checksumSHA1": "L68uqaYKEOxkq2xwnNV2bRP7yO4=",
 			"path": "golang.org/x/net/html",
-			"revision": "9dfe39835686865bff950a07b394c12a98ddc811",
-			"revisionTime": "2017-11-15T06:26:45Z"
+			"revision": "07e8617a6db2368fa55d4616f371ee1b1403c817",
+			"revisionTime": "2018-03-07T20:24:50Z"
 		},
 		{
 			"checksumSHA1": "uMRr2bnIJS+9Xm0FqMBYUTzaSGs=",
@@ -1001,5 +1001,5 @@
 			"revisionTime": "2017-11-17T19:11:05Z"
 		}
 	],
-	"rootPath": "gitlab.com/nbering/terraform-provider-ansible"
+	"rootPath": "github.com/nbering/terraform-provider-ansible"
 }

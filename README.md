@@ -85,7 +85,10 @@ resource "ansible_group" "web" {
 ## Compatibility
 
 Version [1.0.0][7] of this project is compatible with Terraform version
-[0.12-beta2][8]. If you need a version compatible with an earlier version of
+[0.12-beta2][8]. You will also need [2.0.0][11]+ of the terraform-inventory
+script, as the internal structure of Terraform state files has changed. 
+
+If you need a version compatible with an earlier version of
 Terraform, use version [0.0.4][9].
 
 When upgrading to Terraform 0.12.x, you may need to change your configuration
@@ -143,3 +146,4 @@ and made available under their own license considerations.
 [8]: https://github.com/hashicorp/terraform/releases/tag/v0.12.0-beta2
 [9]: https://github.com/nbering/terraform-provider-ansible/releases/tag/v0.0.4
 [10]: https://bazaar.canonical.com/en/
+[11]: https://github.com/nbering/terraform-inventory/releases/tag/v2.0.0

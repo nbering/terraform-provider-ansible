@@ -27,7 +27,11 @@ or libraries to be installed on your workstation.
 
 ### Compiling From Source
 
-> Note: Terraform requires Go 1.9 or later to successfully compile.
+> Note: Terraform requires Go 1.11 or later to successfully compile.
+
+> Note: Dependencies are no longer included in this repository. You may need the
+[bazaar][10] version control utility to download some of Terraform's Go-lang
+module dependencies.
 
 If you'd like to take advantage of features not yet available in a pre-compiled
 release, you can compile `terraform-provider-ansible` from source.
@@ -59,11 +63,11 @@ directory as described in Terraform's [plugin installation instructions][2]
 
 ## Terraform Configuration Example
 
-```
+```hcl
 resource "ansible_host" "example" {
     inventory_hostname = "example.com"
     groups = ["web"]
-    vars {
+    vars = {
         ansible_user = "admin"
     }
 }
@@ -71,10 +75,41 @@ resource "ansible_host" "example" {
 resource "ansible_group" "web" {
   inventory_group_name = "web"
   children = ["foo", "bar", "baz"]
-  vars {
+  vars = {
     foo = "bar"
     bar = 2
   }
+}
+```
+
+## Compatibility
+
+Version [1.0.0][7] of this project is compatible with Terraform version
+[0.12-beta2][8]. If you need a version compatible with an earlier version of
+Terraform, use version [0.0.4][9].
+
+When upgrading to Terraform 0.12.x, you may need to change your configuration
+files to reflect changes to the new version of the Hashicorp Configuration
+Lanaguage (HCL). The only known incompatibility is that `vars` attributes now
+require an equals operator (`=`).
+
+**0.11.x**
+```hcl
+resource "ansible_host" "example" {
+    inventory_hostname = "example.com"
+    vars {
+        ansible_user = "admin"
+    }
+}
+```
+
+**0.12.x**
+```hcl
+resource "ansible_host" "example" {
+    inventory_hostname = "example.com"
+    vars = {
+        ansible_user = "admin"
+    }
 }
 ```
 
@@ -104,3 +139,7 @@ and made available under their own license considerations.
 [4]: https://github.com/nbering/terraform-provider-ansible/releases
 [5]: https://golang.org/doc/install
 [6]: https://github.com/travis-ci/gimme
+[7]: https://github.com/nbering/terraform-provider-ansible/releases/tag/v1.0.0
+[8]: https://github.com/hashicorp/terraform/releases/tag/v0.12.0-beta2
+[9]: https://github.com/nbering/terraform-provider-ansible/releases/tag/v0.0.4
+[10]: https://bazaar.canonical.com/en/

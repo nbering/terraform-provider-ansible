@@ -33,7 +33,7 @@ const testAnsibleGroupConfig = `
   resource "ansible_group" "group_1" {
     inventory_group_name = "group_1"
     children = ["foo", "bar", "baz"]
-    vars {
+    vars = {
       foo = "bar"
       bar = 2
     }

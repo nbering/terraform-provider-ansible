@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [1.0.0] - 2018-05-05
+## [1.0.0] - 2019-05-05
 ### Changed
 - Update dependencies for Terraform v0.12-beta2 - breaking due to plugin version change
 

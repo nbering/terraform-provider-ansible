@@ -101,9 +101,6 @@ An Ansible module that runs Terraform plans and deployments.
 Contributions specific to this project are made available under the
 [Mozilla Public License](./LICENSE).
 
-Code under the `vendor/` directory is copyright of the various package owners,
-and made available under their own license considerations.
-
 [1]: https://github.com/nbering/terraform-inventory/
 [2]: https://www.terraform.io/docs/plugins/basics.html#installing-a-plugin
 [3]: http://nicholasbering.ca/tools/2018/01/08/introducing-terraform-provider-ansible/

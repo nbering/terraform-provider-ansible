@@ -29,6 +29,9 @@ aux_links:
 # Build settings
 highlighter: rouge
 markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
 remote_theme: pmarsceill/just-the-docs
 plugins:
   - jekyll-feed

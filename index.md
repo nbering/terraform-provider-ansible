@@ -10,7 +10,7 @@ motivations behind this provider.
 
 ## Terraform Configuration Example
 
-{% highlight tf %}
+```terraform
 resource "ansible_host" "example" {
     inventory_hostname = "example.com"
     groups = ["web"]
@@ -27,7 +27,7 @@ resource "ansible_group" "web" {
     bar = 2
   }
 }
-{% endhighlight %}
+```
 
 ## Compatibility
 
@@ -44,24 +44,24 @@ Lanaguage (HCL). The only known incompatibility is that `vars` attributes now
 require an equals operator (`=`).
 
 **0.11.x**
-{% highlight tf %}
+```terraform
 resource "ansible_host" "example" {
     inventory_hostname = "example.com"
     vars {
         ansible_user = "admin"
     }
 }
-{% endhighlight %}
+```
 
 **0.12.x**
-{% highlight tf %}
+```terraform
 resource "ansible_host" "example" {
     inventory_hostname = "example.com"
     vars = {
         ansible_user = "admin"
     }
 }
-{% endhighlight %}
+```
 
 ## Alternatives and Similar Projects
 ### [jonmorehouse/terraform-provisioner-ansible](https://github.com/jonmorehouse/terraform-provisioner-ansible)

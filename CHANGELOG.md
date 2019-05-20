@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.0.1] - 2019-05-20
+### Added
+- `ansible_host_var` and `ansible_group_var` resources for setting individual variables
+
+## [1.0.0] - 2019-05-05
+### Changed
+- Update dependencies for Terraform v0.12-beta2 - breaking due to plugin version change
+
 ## [0.0.4] - 2018-04-19
 ### Changed
 - Update vendored dependencies to for Terraform to v0.11.7
@@ -21,7 +29,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - Releases going forward will have correct binary name for Terraform installation (fixes [#2](https://github.com/nbering/terraform-provider-ansible/issues/2))
 
-[Unreleased]: https://github.com/nbering/terraform-provider-ansible/compare/v0.0.4...HEAD
+[Unreleased]: https://github.com/nbering/terraform-provider-ansible/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/nbering/terraform-provider-ansible/compare/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/nbering/terraform-provider-ansible/compare/v0.0.4...v1.0.0
 [0.0.4]: https://github.com/nbering/terraform-provider-ansible/compare/v0.0.3...v0.0.4
 [0.0.3]: https://github.com/nbering/terraform-provider-ansible/compare/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/nbering/terraform-provider-ansible/compare/v0.0.1...v0.0.2

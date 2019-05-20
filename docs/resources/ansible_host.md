@@ -5,7 +5,7 @@ parent: Resources
 nav_order: 3
 ---
 ## Example Usage
-{% highlight hcl %}
+{% highlight tf %}
 resource "ansible_host" "example" {
     inventory_hostname = "example.com"
     groups = ["web"]

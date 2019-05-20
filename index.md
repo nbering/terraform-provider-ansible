@@ -10,7 +10,7 @@ motivations behind this provider.
 
 ## Terraform Configuration Example
 
-{% highlight hcl %}
+{% highlight tf %}
 resource "ansible_host" "example" {
     inventory_hostname = "example.com"
     groups = ["web"]
@@ -44,7 +44,7 @@ Lanaguage (HCL). The only known incompatibility is that `vars` attributes now
 require an equals operator (`=`).
 
 **0.11.x**
-{% highlight hcl %}
+{% highlight tf %}
 resource "ansible_host" "example" {
     inventory_hostname = "example.com"
     vars {
@@ -54,7 +54,7 @@ resource "ansible_host" "example" {
 {% endhighlight %}
 
 **0.12.x**
-{% highlight hcl %}
+{% highlight tf %}
 resource "ansible_host" "example" {
     inventory_hostname = "example.com"
     vars = {

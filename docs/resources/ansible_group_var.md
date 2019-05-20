@@ -5,7 +5,7 @@ parent: Resources
 nav_order: 2
 ---
 ## Example Usage
-{% highlight hcl %}
+{% highlight tf %}
 resource "ansible_group_var" "extra" {
   inventory_group_name = "db"
   key                  = "ansible_user"

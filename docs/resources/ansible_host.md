@@ -5,7 +5,7 @@ parent: Resources
 nav_order: 3
 ---
 ## Example Usage
-```hcl
+{% highlight hcl %}
 resource "ansible_host" "example" {
     inventory_hostname = "example.com"
     groups = ["web"]
@@ -13,7 +13,7 @@ resource "ansible_host" "example" {
         ansible_user = "admin"
     }
 }
-```
+{% endhighlight %}
 
 ## Argument Reference
 

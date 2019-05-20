@@ -5,13 +5,13 @@ parent: Resources
 nav_order: 2
 ---
 ## Example Usage
-```hcl
+{% highlight hcl %}
 resource "ansible_group_var" "extra" {
   inventory_group_name = "db"
   key                  = "ansible_user"
   value                = "postgres"
 }
-```
+{% endhighlight %}
 
 ## Argument Reference
 

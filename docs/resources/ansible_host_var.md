@@ -5,13 +5,13 @@ parent: Resources
 nav_order: 4
 ---
 ## Example Usage
-```hcl
+{% highlight hcl %}
 resource "ansible_host_var" "extra" {
   inventory_hostname = "www.example.com"
   key                = "db_host"
   value              = "db.example.com"
 }
-```
+{% endhighlight %}
 
 ## Argument Reference
 

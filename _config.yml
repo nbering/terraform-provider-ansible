@@ -27,6 +27,7 @@ aux_links:
     - "https://github.com/nbering/terraform-provider-ansible"
 
 # Build settings
+highlighter: rouge
 markdown: kramdown
 remote_theme: pmarsceill/just-the-docs
 plugins:

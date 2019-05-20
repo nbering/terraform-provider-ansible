@@ -17,8 +17,8 @@ title: Terraform Provider for Ansible
 # email: your-email@example.com
 description: >- # this means to ignore newlines until "baseurl:"
  \"Logical\" provider for integrating with an Ansible Dynamic Inventory script.
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/terraform-provider-ansible" # the subpath of your site, e.g. /blog
+url: "https://nbering.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username: nickbering
 # github_username:  nbering
 

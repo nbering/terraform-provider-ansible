@@ -1,4 +1,10 @@
 # Ansible Terraform Provider
+
+> **Note:** This branch is a maintenance branch for ongoing support of 0.x
+versions of this provider, built against Terraform versions before 0.12.x. Some
+features may be back-ported here when appropriate, but vendored dependencies
+will likely not be updated.
+
 A Terraform provider serving as an interop layer for an Ansible [dynamic
 inventory script][1].
 

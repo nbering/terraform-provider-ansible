@@ -2,7 +2,7 @@
 layout: default
 title: ansible_host
 parent: Resources
-nav_order: 2
+nav_order: 3
 ---
 ## Example Usage
 ```hcl

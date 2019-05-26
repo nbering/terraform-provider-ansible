@@ -26,6 +26,12 @@ func resourceGroup() *schema.Resource {
 				Optional: true,
 			},
 
+			"priority": {
+				Type:     schema.TypeInt,
+				Optional: true,
+				Default:  50,
+			},
+
 			"vars": {
 				Type:     schema.TypeMap,
 				Optional: true,

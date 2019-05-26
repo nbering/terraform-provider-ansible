@@ -17,6 +17,7 @@ func resourceHost() *schema.Resource {
 				Required: true,
 				ForceNew: true,
 			},
+
 			"groups": {
 				Type: schema.TypeList,
 				Elem: &schema.Schema{
@@ -24,6 +25,13 @@ func resourceHost() *schema.Resource {
 				},
 				Optional: true,
 			},
+
+			"priority": {
+				Type:     schema.TypeInt,
+				Optional: true,
+				Default:  50,
+			},
+
 			"vars": &schema.Schema{
 				Type:     schema.TypeMap,
 				Optional: true,

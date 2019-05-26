@@ -20,6 +20,12 @@ func resourceGroupVar() *schema.Resource {
 				ForceNew: true,
 			},
 
+			"priority": {
+				Type:     schema.TypeInt,
+				Optional: true,
+				Default:  60,
+			},
+
 			"key": {
 				Type:     schema.TypeString,
 				Required: true,

@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- `priority` added to all resources, to be interpreted by inventory script to merge higher priority vars over lower
 
 ## [0.0.5] - 2019-05-20
 ### Added

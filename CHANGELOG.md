@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
-- `priority` added to all resources, to be interpreted by inventory script to merge higher priority vars over lower
+- `variable_priority` added to all resources, to be interpreted by inventory script to merge higher priority vars over lower
 
 ## [0.0.5] - 2019-05-20
 ### Added

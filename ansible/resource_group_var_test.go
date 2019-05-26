@@ -22,7 +22,7 @@ func TestAnsibleGroupVar(t *testing.T) {
 					resource.TestCheckResourceAttr(
 						"ansible_group_var.groupvar_1", "value", "bup"),
 					resource.TestCheckResourceAttr(
-						"ansible_group_var.groupvar_1", "priority", "60"),
+						"ansible_group_var.groupvar_1", "variable_priority", "60"),
 				),
 			},
 		},

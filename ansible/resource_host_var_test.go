@@ -22,7 +22,7 @@ func TestAnsibleHostVar(t *testing.T) {
 					resource.TestCheckResourceAttr(
 						"ansible_host_var.hostvar_1", "value", "bar"),
 					resource.TestCheckResourceAttr(
-						"ansible_host_var.hostvar_1", "priority", "60"),
+						"ansible_host_var.hostvar_1", "variable_priority", "60"),
 				),
 			},
 		},

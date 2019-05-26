@@ -20,7 +20,7 @@ func resourceHostVar() *schema.Resource {
 				ForceNew: true,
 			},
 
-			"priority": {
+			"variable_priority": {
 				Type:     schema.TypeInt,
 				Optional: true,
 				Default:  60,

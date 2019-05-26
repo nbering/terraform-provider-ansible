@@ -24,7 +24,7 @@ func TestAnsibleGroup(t *testing.T) {
 					resource.TestCheckResourceAttr(
 						"ansible_group.group_1", "vars.bar", "2"),
 					resource.TestCheckResourceAttr(
-						"ansible_group.group_1", "priority", "50"),
+						"ansible_group.group_1", "variable_priority", "50"),
 				),
 			},
 		},

@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
+- back-ported `variable_priority` option from v1.0.2
+
+## [1.0.2] - 2019-05-26
+### Added
 - `variable_priority` added to all resources, to be interpreted by inventory script to merge higher priority vars over lower
 
 ## [0.0.5] - 2019-05-20
@@ -39,7 +43,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - Releases going forward will have correct binary name for Terraform installation (fixes [#2](https://github.com/nbering/terraform-provider-ansible/issues/2))
 
-[Unreleased]: https://github.com/nbering/terraform-provider-ansible/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/nbering/terraform-provider-ansible/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/nbering/terraform-provider-ansible/compare/v1.0.1...v1.0.2
 [0.0.5]: https://github.com/nbering/terraform-provider-ansible/compare/v0.0.4...v0.0.5
 [1.0.1]: https://github.com/nbering/terraform-provider-ansible/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/nbering/terraform-provider-ansible/compare/v0.0.4...v1.0.0

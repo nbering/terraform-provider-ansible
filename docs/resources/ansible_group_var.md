@@ -21,6 +21,7 @@ The following arguments are suported:
 - `inventory_group_name` - (Required) The group name that will be used by ansible in the dynamic inventory.
 - `key` - (Required) The key name for the group variable.
 - `value` - (Required) Value of the group variable.
+- `variable_priority` - (Optional) Accepts an integer. Determines the order in which same-key variables will be merged by the Ansible Dynamic Inventory script to produce the final set of variables for Ansible. Higher numbers will over-write lower numbers. Default: 60
 
 ## Attributes Reference
 

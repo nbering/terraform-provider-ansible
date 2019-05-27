@@ -5,13 +5,14 @@ parent: Resources
 nav_order: 2
 ---
 ## Example Usage
-{% highlight tf %}
+
+```terraform
 resource "ansible_group_var" "extra" {
   inventory_group_name = "db"
   key                  = "ansible_user"
   value                = "postgres"
 }
-{% endhighlight %}
+```
 
 ## Argument Reference
 

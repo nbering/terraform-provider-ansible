@@ -5,7 +5,8 @@ parent: Resources
 nav_order: 1
 ---
 ## Example Usage
-{% highlight tf %}
+
+```terraform
 resource "ansible_group" "web" {
   inventory_group_name = "web"
   children             = ["foo", "bar", "baz"]
@@ -14,7 +15,7 @@ resource "ansible_group" "web" {
     bar = 2
   }
 }
-{% endhighlight %}
+```
 
 ## Argument Reference
 

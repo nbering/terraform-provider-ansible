@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.0.6] - 2019-05-26
 ### Added
 - back-ported `variable_priority` option from v1.0.2
 
@@ -44,6 +46,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Releases going forward will have correct binary name for Terraform installation (fixes [#2](https://github.com/nbering/terraform-provider-ansible/issues/2))
 
 [Unreleased]: https://github.com/nbering/terraform-provider-ansible/compare/v1.0.2...HEAD
+[0.0.6]: https://github.com/nbering/terraform-provider-ansible/compare/v0.0.5...v0.0.6
 [1.0.2]: https://github.com/nbering/terraform-provider-ansible/compare/v1.0.1...v1.0.2
 [0.0.5]: https://github.com/nbering/terraform-provider-ansible/compare/v0.0.4...v0.0.5
 [1.0.1]: https://github.com/nbering/terraform-provider-ansible/compare/v1.0.0...v1.0.1

@@ -5,13 +5,14 @@ nav_order: 1
 ---
 
 ## Installation
+{: .no_toc }
 
 Installation can be accomplished in two different ways:
 
-1. Installing a pre-compiled release (recommended)
-2. Compiling from source
+1. TOC
+{:toc}
 
-### Installing a Pre-Compiled Release
+### Installing a Pre-Compiled Release (recommended)
 
 Downloading and installing a pre-compiled `terraform-provider-ansible` release
 is the recommended method of installation since it requires no additional tools

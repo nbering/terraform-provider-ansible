@@ -65,3 +65,4 @@ directory as described in Terraform's [plugin installation instructions][2]
 [4]: https://github.com/nbering/terraform-provider-ansible/releases
 [5]: https://golang.org/doc/install
 [6]: https://github.com/travis-ci/gimme
+[10]: https://bazaar.canonical.com/en/

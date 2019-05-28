@@ -4,13 +4,16 @@ layout: default
 nav_order: 1
 ---
 
-## Installation
+# Installation
 {: .no_toc }
 
-Installation can be accomplished in two different ways:
+## Table of Contents
+{: .no_toc .text-delta }
 
 1. TOC
 {:toc}
+
+## Terraform Provider
 
 ### Installing a Pre-Compiled Release (recommended)
 
@@ -60,6 +63,22 @@ $ make
 You should now have a `terraform-provider-ansible` binary located at
 `$GOPATH/bin/terraform-provider-ansible`. Copy this binary to a designated
 directory as described in Terraform's [plugin installation instructions][2]
+
+## Ansible Dynamic Inventory Script
+
+### Download Script
+
+Download [terraform.py (latest)](https://github.com/nbering/terraform-inventory/releases/download/v2.2.0/terraform.py), or any past version from the [releases](https://github.com/nbering/terraform-inventory/releases) page on it's releases page.
+
+Copy the script file to a location on your system. Ansible's own documentation suggests placing it at `/etc/ansible/terraform.py`, but the particular location does not matter to the script. Ensure it has executable permissions (`chmod +x /etc/ansible/terraform.py`).
+
+### Using Dynamic Inventory
+
+With your Ansible playbook and Terraform configuration in the same directory, run Ansible with the `-i` flag to set the path you used to install the inventory script.
+
+```
+$ ansible-playbook -i /etc/ansible/terraform.py playbook.yml
+```
 
 [2]: https://www.terraform.io/docs/plugins/basics.html#installing-a-plugin
 [4]: https://github.com/nbering/terraform-provider-ansible/releases

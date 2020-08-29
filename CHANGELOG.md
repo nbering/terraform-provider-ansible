@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.0.4] - 2020-08-29
+### Added
+- Tooling for releases compatible with Terraform Registry
+
 ## [1.0.3] - 2019-05-27
 ### Change
 - Update dependencies for Terraform v0.12.0 release
@@ -49,7 +53,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - Releases going forward will have correct binary name for Terraform installation (fixes [#2](https://github.com/nbering/terraform-provider-ansible/issues/2))
 
-[Unreleased]: https://github.com/nbering/terraform-provider-ansible/compare/v1.0.3...HEAD
+[Unreleased]: https://github.com/nbering/terraform-provider-ansible/compare/v1.0.2...HEAD
+[1.0.4]: https://github.com/nbering/terraform-provider-ansible/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/nbering/terraform-provider-ansible/compare/v1.0.2...v1.0.3
 [0.0.6]: https://github.com/nbering/terraform-provider-ansible/compare/v0.0.5...v0.0.6
 [1.0.2]: https://github.com/nbering/terraform-provider-ansible/compare/v1.0.1...v1.0.2

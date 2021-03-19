@@ -9,8 +9,40 @@ motivations behind this provider.
 
 Installation can be accomplished in two different ways:
 
-1. Installing a pre-compiled release (recommended)
-2. Compiling from source
+1. For Terraform 0.13+ Use terraform required_providers block
+2. Installing a pre-compiled release (recommended)
+3. Compiling from source
+
+### For Terraform 0.13+ Use terraform required_providers block
+providers.tf
+```
+terraform {
+  required_providers {
+    ansible = {
+      source = "nbering/ansible"
+      version = "1.0.4"
+    }
+  }
+}
+provider "ansible" {}
+```
+then perform another init to download the provider.
+```
+$ terraform init
+Initializing modules...
+Initializing the backend...
+Initializing provider plugins...
+- Finding nbering/ansible versions matching "1.0.4"
+...
+- Installing nbering/ansible v1.0.4...
+- Installed nbering/ansible v1.0.4 (self-signed, key ID xxxxxxxxxxxxxx)
+...
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+```
 
 ### Installing a Pre-Compiled Release
 

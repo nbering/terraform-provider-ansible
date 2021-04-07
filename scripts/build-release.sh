@@ -37,7 +37,7 @@ RELEASE_VERSION="$(git describe --abbrev=0)"
 gox \
     -os="linux darwin windows freebsd openbsd solaris" \
     -arch="386 amd64 arm" \
-    -osarch="!darwin/arm !darwin/386" \
+    -osarch="darwin/arm64 !darwin/arm !darwin/386" \
     -output "pkg/{{.OS}}_{{.Arch}}/{{.Dir}}_${RELEASE_VERSION}"
 
 cd pkg;

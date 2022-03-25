@@ -157,8 +157,8 @@ A very similar solution to this one, without the Logical provider. Depends on
 specific Terraform resource types, and relies heavily on cloud-providers' tag
 implementations.
 
-### [Ansible Module: Terraform](http://docs.ansible.com/ansible/devel/modules/terraform_module.html)
-An Ansible module that runs Terraform plans and deployments.
+### [Ansible Collection: Terraform](https://docs.ansible.com/ansible/latest/collections/community/general/terraform_module.html)
+An Ansible collection that runs Terraform plans and deployments.
 
 ## License
 

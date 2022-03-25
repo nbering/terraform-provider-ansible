@@ -1,6 +1,6 @@
 module github.com/nbering/terraform-provider-ansible
 
-go 1.12
+go 1.16
 
 require (
 	github.com/hashicorp/hcl v0.0.0-20171017181929-23c074d0eceb // indirect
